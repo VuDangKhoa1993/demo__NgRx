@@ -1,0 +1,15 @@
+<div class="result">
+  <p class="result__message text-warning">
+    {{ message$ | async }}
+  </p>
+  <p class="result__total text-info">
+    Số lần chơi: <span class="text-warning">{{ numOfTime$ | async }}</span>
+  </p>
+  <p class="">
+    Số lần thắng: <span class="text-success">{{ numOfWins$ | async }}</span>
+  </p>
+
+  <div class="mt-5">
+    <button class="btn btn-success" (click)="playGame()">Play Game</button>
+  </div>
+</div>

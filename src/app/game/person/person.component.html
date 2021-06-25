@@ -1,0 +1,22 @@
+<div class="person">
+  <div class="speech-bubble">
+    <div
+      class="speech-bubble__bg"
+      [ngStyle]="{ 'background-image': 'url(' + pickImage + ')' }"
+    ></div>
+  </div>
+  <div class="person__img">
+    <img src="../../../.../../assets/img/player.png" width="250" alt="" />
+  </div>
+
+  <div class="person__list">
+    <ng-container *ngFor="let game of gameStore">
+      <button
+        [ngClass]="[game.bet ? 'btn btn-light active' : 'btn btn-light']"
+        (click)="pickBet(game)"
+      >
+        <img [src]="game.image" alt="" />
+      </button>
+    </ng-container>
+  </div>
+</div>
