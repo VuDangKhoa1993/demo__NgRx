@@ -18,3 +18,5 @@ export class ComputerComponent implements OnInit {
       .subscribe((data) => (this.computerImage = data));
   }
 }
+
+// comment

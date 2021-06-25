@@ -10,3 +10,5 @@ export class GameCenterComponent implements OnInit {
 
   ngOnInit(): void {}
 }
+
+// comment
