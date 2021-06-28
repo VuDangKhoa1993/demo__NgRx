@@ -15,7 +15,7 @@ const _postReducer = createReducer(
       alert('Title already exist!!!');
       return { ...state };
     } else {
-      [...state.posts, post];
+      [...state.posts, post];// ???? I don't think we need this line code.
     }
 
     localStorage.setItem(

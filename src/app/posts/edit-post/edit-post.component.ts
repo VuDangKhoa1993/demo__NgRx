@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { filter, switchMap } from 'rxjs/operators';
 import { Post } from 'src/app/models/post.model';
 import { AppState } from 'src/app/store/app.state';
 import { updatePost } from '../state/post.actions';
@@ -18,15 +19,28 @@ export class EditPostComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((param) => {
-      let id = param.get('id');
+    this.route.paramMap
+      .pipe(
+        filter((params) => !!params.get('id')),
+        switchMap((params) => {
+          const id = params.get('id')!;
+          return this.store.select(getPostById, { id });
+        })
+      )
+      .subscribe((data) => {
+        this.post = data;
+        this.createForm();
+      });
+    // Rxjs high order operators should be used instead of using nested subscribe because it is not good for performance web,
+    // this.route.paramMap.subscribe((param) => {
+    //   let id = param.get('id');
 
-      this.store
-        .select(getPostById, { id })
-        .subscribe((data) => (this.post = data));
+    //   this.store
+    //     .select(getPostById, { id })
+    //     .subscribe((data) => (this.post = data));
 
-      this.createForm();
-    });
+    //   this.createForm();
+    // });
   }
 
   createForm(): void {
@@ -54,6 +68,8 @@ export class EditPostComponent implements OnInit {
   }
 
   showMessageErrorTitle() {
+    // doestn't call method directly inside of template because it can cause performance's issues during the change detection running.
+    // in this case, we should define a specify variable (Ex: message) to obtain returned value from this method and then binding it to the template.
     let title = this.editPostForm.get('title');
     if (title?.touched && title?.invalid) {
       if (title?.errors?.required) {
@@ -69,6 +85,7 @@ export class EditPostComponent implements OnInit {
   }
 
   showMessageErrorDesc() {
+    // same as above
     let desc = this.editPostForm.get('description');
     if (desc?.touched && desc?.invalid) {
       if (desc?.errors?.required) {

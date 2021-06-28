@@ -13,8 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [AppComponent, HeaderComponent, HomeComponent],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
+   // FormsModule, // remove these things because they have already decleared in the lazy-module. 
+    // ReactiveFormsModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
   ],

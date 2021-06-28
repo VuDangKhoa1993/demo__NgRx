@@ -16,6 +16,7 @@ export class PersonComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
+        // async pipe ( | async ) should be used in this case. 
     this.store.select(getGameStore).subscribe((data) => {
       this.gameStore = data;
     });
